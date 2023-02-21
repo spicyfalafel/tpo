@@ -6,11 +6,11 @@ import java.util.Objects;
 // This is a Class to represent the hash table.
 class MyMap<K, V> {
     // A bucketArray is used to store the array of chains.
-    private ArrayList<HashNode<K, V>> bucketArray;
+    public ArrayList<HashNode<K, V>> bucketArray;
     // The current capacity of the Array List.
-    private int numbucks;
+    public int numbucks;
     // The current size_of_array of the ArrayList.
-    private int size_of_array;
+    public int size_of_array;
 
     // Constructor (Initializes capacity, size_of_array and
     // empty chains.
@@ -37,7 +37,7 @@ class MyMap<K, V> {
     }
 
     // This implements Hash Function to find the index for a key
-    private int getBucketIndex(K key) {
+    public int getBucketIndex(K key) {
         int hashCode = hashCode(key);
         int index = hashCode % numbucks;
         // key.hashCode() may result negative.
@@ -105,9 +105,11 @@ class MyMap<K, V> {
             }
             head = head.next;
         }
+
         // Increment the size of array.
         size_of_array++;
         head = bucketArray.get(bucketIndex);
+
         HashNode<K, V> newNode
                 = new HashNode<K, V>(key, value, hashCode);
         newNode.next = head;
