@@ -1,5 +1,7 @@
 package tpo.text.radio;
 
+import tpo.text.Human;
+
 /*
    Многие годы радио настраивали, нажимая кнопки и вращая рукоятки.
  */
@@ -9,8 +11,13 @@ public class RadioV1 extends Radio{
     }
 
     @Override
-    public boolean turnOn(int x, int y, int z) {
-        if (super.turnOn(x, y, z)) {
+    public boolean canBeUsed(Human h) {
+        return super.canBeUsed(h) && h.getH;
+    }
+
+    @Override
+    public boolean turnOn(Human h) {
+        if (super.turnOn(h)) {
             System.out.println("RadioV1 is turned on!");
             return true;
         }
@@ -18,8 +25,8 @@ public class RadioV1 extends Radio{
     }
 
     @Override
-    public boolean turnOff(int x, int y, int z) {
-        if (super.turnOff(x, y, z)) {
+    public boolean turnOff(Human h) {
+        if (super.turnOff(h)) {
             System.out.println("RadioV1 is turned off!");
             return true;
         }

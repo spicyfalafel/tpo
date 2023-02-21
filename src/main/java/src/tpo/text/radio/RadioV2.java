@@ -1,5 +1,7 @@
 package tpo.text.radio;
 
+import tpo.text.Human;
+
 /*
     Позже технология стала сложнее, и управление сделали сенсорным,
     -- достаточно было касаться панелей пальцами.
@@ -9,9 +11,15 @@ public class RadioV2 extends Radio{
         super(x, y, z, 2);
     }
 
+
     @Override
-    public boolean turnOn(int x, int y, int z) {
-        if (super.turnOn(x, y, z)) {
+    public boolean canBeUsed(Human h) {
+        return super.canBeUsed(h);
+    }
+
+    @Override
+    public boolean turnOn(Human h) {
+        if (super.turnOn(h)) {
             System.out.println("RadioV2 is turned on!");
             return true;
         }
@@ -19,8 +27,8 @@ public class RadioV2 extends Radio{
     }
 
     @Override
-    public boolean turnOff(int x, int y, int z) {
-        if (super.turnOff(x, y, z)) {
+    public boolean turnOff(Human h) {
+        if (super.turnOff(h)) {
             System.out.println("RadioV2 is turned off!");
             return true;
         }

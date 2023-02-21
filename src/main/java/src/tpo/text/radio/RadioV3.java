@@ -1,5 +1,7 @@
 package tpo.text.radio;
 
+import tpo.text.Human;
+
 /*
     Теперь же нужно было просто помахивать рукой в направлении аппаратуры и надеяться, что попал.
     Это, конечно, экономило расход мышечной энергии, но если вы хотели слушать одну и ту же программу,
@@ -11,8 +13,8 @@ public class RadioV3 extends Radio{
     }
 
     @Override
-    public boolean turnOn(int x, int y, int z) {
-        if (super.turnOn(x, y, z)) {
+    public boolean turnOn(Human h) {
+        if (super.turnOn(h)) {
             System.out.println("RadioV3 is turned on!");
             return true;
         }
@@ -20,8 +22,8 @@ public class RadioV3 extends Radio{
     }
 
     @Override
-    public boolean turnOff(int x, int y, int z) {
-        if (super.turnOff(x, y, z)) {
+    public boolean turnOff(Human h) {
+        if (super.turnOff(h)) {
             System.out.println("RadioV3 is turned off!");
             return true;
         }

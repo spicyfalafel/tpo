@@ -1,5 +1,7 @@
 package tpo.text.radio;
 
+import tpo.text.Human;
+
 import java.util.ArrayList;
 
 //В рубке "Золотого Сердца" громко играла музыка: Зафод искал по суб-эфирному радио новости о себе.
@@ -17,9 +19,9 @@ public abstract class Radio {
     public double countDistance (int x, int y){
         return Math.pow(Math.pow((this.x - x), 2) + Math.pow((this.y - y), 2), 0.5);
     }
-    public boolean canBeUsed(int x, int y, int z){
-        if (z == this.z){
-            return (this.countDistance(x, y) < this.maxDistanceToUse);
+    public boolean canBeUsed(Human h){
+        if (h.getZ() == this.z){
+            return (this.countDistance(h.getX(), h.getY()) < this.maxDistanceToUse);
         } else return false;
     }
     public Radio(int x, int y, int z, double maxDistanceToUse) {
@@ -34,15 +36,15 @@ public abstract class Radio {
     }
 
     protected boolean isTurnedOn;
-    public boolean turnOn(int x, int y, int z){
-        if (canBeUsed(x, y, z) && !this.isTurnedOn) {
+    public boolean turnOn(Human h){
+        if (canBeUsed(h) && !this.isTurnedOn) {
             this.isTurnedOn = true;
             return true;
         }
         return false;
     }
-    public boolean turnOff(int x, int y, int z) {
-        if (canBeUsed(x, y, z) && this.isTurnedOn) {
+    public boolean turnOff(Human h){
+        if (canBeUsed(h) && this.isTurnedOn) {
             this.isTurnedOn = false;
             return true;
         }

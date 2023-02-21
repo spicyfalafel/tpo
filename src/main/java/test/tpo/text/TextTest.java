@@ -18,7 +18,7 @@ public class TextTest {
     static void init() {
         ArrayList<Hand> extraHands = new ArrayList<Hand>();
         extraHands.add(new Hand("third one"));
-        h = new HumanV2(new Hand("left"), new Hand("right"), extraHands);
+        h = new HumanV2(new Hand("left"), new Hand("right"), extraHands, 1, 1, 1);
     }
 
     @DisplayName("HumanlikeEntity can wave hands just like human")
