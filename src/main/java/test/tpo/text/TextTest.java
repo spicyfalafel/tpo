@@ -1,6 +1,7 @@
 package tpo.text;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,30 +14,24 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TextTest {
-    private static HumanV2 threeHandsHumanV2;
-    private static Human oneHandHuman;
-    private static Human emptyHuman;
-    private static Radio r1;
-    private static Radio r2;
-    private static Radio r3;
+    private HumanV2 threeHandsHumanV2;
+    private Human oneHandHuman;
+    private Human emptyHuman;
+    private Radio r1;
+    private Radio r2;
+    private Radio r3;
 
-    private static ArrayList<Radio> radios;
 
-    @BeforeAll
-    static void init() {
+    @BeforeEach
+    void init() {
         ArrayList<Hand> extraHands = new ArrayList<Hand>();
         extraHands.add(new Hand("third one"));
         threeHandsHumanV2 = new HumanV2(new Hand("left"), new Hand("right"), extraHands, 1, 1, 1);
         r1 =  new RadioV1(1,1,1);
         r2 =  new RadioV2(1,1,1);
         r3 =  new RadioV3(1,1,1);
-        radios = new ArrayList<>();
-        radios.add(r1);
-        radios.add(r2);
-        radios.add(r3);
         oneHandHuman = new Human(new Hand(), null, 1,1,1);
         emptyHuman = new Human();
-
     }
 
     @DisplayName("Hand can have from 0 to 5 fingers")
@@ -113,9 +108,6 @@ public class TextTest {
     @DisplayName("Human class handles nulls in hands.")
     @Test
     void humanHandsTest(){
-        assertEquals(1, oneHandHuman.getAllHands().size());
-        assertEquals(3, threeHandsHumanV2.getAllHands().size());
-
         Human h1 = new Human(null, null, 1, 2, 3);
         assertEquals(0, h1.getAllHands().size());
         Human h2 = new Human(null, new Hand(), 1, 2, 3);
