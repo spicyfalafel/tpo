@@ -1,24 +1,15 @@
 package tpo.text.radio;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@EqualsAndHashCode
 public class RadioProgram {
     private String name;
     private double freq;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getFreq() {
-        return freq;
-    }
-
-    public void setFreq(double freq) {
-        this.freq = freq;
-    }
 
     public RadioProgram(String name, double freq) {
         this.name = name;

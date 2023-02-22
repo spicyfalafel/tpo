@@ -1,28 +1,35 @@
 package tpo.text;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 
+@Getter
+@Setter
 public class Human {
     private int maxHands;
-
-    public void setMaxHands(int maxHands) {
-        this.maxHands = maxHands;
-    }
-
-    public int getMaxHands() {
-        return maxHands;
-    }
-
-    public ArrayList<Hand> getAllHands() {
-        return allHands;
-    }
-
     private ArrayList<Hand> allHands;
     private Hand leftHand;
     private Hand rightHand;
     private int x, y, z;
-    public int leftHandIndex = 0;
-    public int rightHandIndex = 1;
+    public final int leftHandIndex = 0;
+    public final int rightHandIndex = 1;
+
+    public boolean setAllHands(ArrayList<Hand> allHands) {
+        int s = allHands.size();
+        if (s > maxHands) return false;
+        this.allHands = allHands;
+        if (s > leftHandIndex) this.leftHand = allHands.get(leftHandIndex);
+        else {
+            this.leftHand = null;
+        }
+        if (s > rightHandIndex) this.rightHand = allHands.get(rightHandIndex);
+        else {
+            this.rightHand = null;
+        }
+        return true;
+    }
 
     public boolean waveByHand(int handId){
         if (handId == 0 && leftHand != null) {
@@ -38,47 +45,18 @@ public class Human {
     public Human(Hand leftHand, Hand rightHand, int x, int y, int z) {
         this.maxHands = 2;
         this.x = x;
-        this.leftHand = leftHand;
-        this.rightHand = rightHand;
-    }
-
-    public Hand getLeftHand() {
-        return leftHand;
-    }
-
-    public Hand getRightHand() {
-        return rightHand;
-    }
-
-    public void setLeftHand(Hand leftHand) {
-        this.leftHand = leftHand;
-    }
-
-    public void setRightHand(Hand rightHand) {
-        this.rightHand = rightHand;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
         this.y = y;
-    }
-
-    public int getZ() {
-        return z;
-    }
-
-    public void setZ(int z) {
         this.z = z;
+        this.leftHand = leftHand;
+        this.rightHand = rightHand;
+        allHands = new ArrayList<>();
+        if (leftHand != null) allHands.add(leftHand);
+        if (rightHand != null) allHands.add(rightHand);
+    }
+    public Human(int x, int y, int z) {
+        this(new Hand(), new Hand(), x, y, z);
+    }
+    public Human() {
+        this(null, null, 0, 0, 0);
     }
 }

@@ -13,6 +13,10 @@ public class RadioV3 extends Radio{
     }
 
     @Override
+    public boolean canBeUsed(Human h) {
+        return super.canBeUsed(h) && h.getAllHands().stream().anyMatch(hh -> hh.getFingerNumber() == 5);
+    }
+    @Override
     public boolean turnOn(Human h) {
         if (super.turnOn(h)) {
             System.out.println("RadioV3 is turned on!");
@@ -28,15 +32,5 @@ public class RadioV3 extends Radio{
             return true;
         }
         return false;
-    }
-
-    @Override
-    public RadioProgram nextProgram() {
-        return null;
-    }
-
-    @Override
-    public RadioProgram previousProgram() {
-        return null;
     }
 }

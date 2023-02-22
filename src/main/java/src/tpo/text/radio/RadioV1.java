@@ -12,7 +12,7 @@ public class RadioV1 extends Radio{
 
     @Override
     public boolean canBeUsed(Human h) {
-        return super.canBeUsed(h) && h.getH;
+        return super.canBeUsed(h) && h.getAllHands().stream().anyMatch(hh -> hh.getFingerNumber() > 1);
     }
 
     @Override
@@ -31,15 +31,5 @@ public class RadioV1 extends Radio{
             return true;
         }
         return false;
-    }
-
-    @Override
-    public RadioProgram nextProgram() {
-        return null;
-    }
-
-    @Override
-    public RadioProgram previousProgram() {
-        return null;
     }
 }
