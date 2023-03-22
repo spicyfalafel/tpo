@@ -2,26 +2,21 @@ package integration
 
 
 import io.mockk.*
-import kotlin.test.assertEquals
-import io.mockk.every
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
 import mymath.*
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.CsvSource
-import kotlin.math.pow
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
+import kotlin.math.PI
+import kotlin.test.assertEquals
 
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SystemTest {
-    /*
-
-    return if (x <= 0) {
-        (cot(x, precision) / tan(x, precision))
-    } else{
-        (((((log10(x, precision) * ln(x, precision)).pow(2)) * log5(x, precision)) - log5(x, precision)) - (log3(x, precision).pow(3)))
-    }
-     */
     val precision = 0.00001
 
     @BeforeEach
@@ -48,20 +43,78 @@ class SystemTest {
         assertEquals(result, theSystem(x, precision), precision)
     }
 
+    private fun argsForX0(): Stream<Arguments?>? {
+        return Stream.of(
+            Arguments.of(-PI/2, 0, Double.NEGATIVE_INFINITY, 0),
+            Arguments.of(-3*PI/2, 0, Double.NEGATIVE_INFINITY, 0)
+        )
+    }
+
+    @ParameterizedTest(name="system x = 0 left")
+    @MethodSource("argsForX0")
+    fun `test x = 0 left`(x: Double, cotVal: Double, tanVal: Double, result: Double){
+        every { cot(x, any()) } returns cotVal
+        every { tan(x, any()) } returns tanVal
+        assertEquals(result, theSystem(x, precision), precision)
+    }
+
+    private fun kotlinCot(x:Double):Double {
+        return kotlin.math.cos(x) / kotlin.math.sin(x)
+    }
+
+    private fun kotlinTan(x:Double):Double {
+        return kotlin.math.sin(x) / kotlin.math.cos(x)
+    }
+
+    private fun argsForPointsNextToX0(): Stream<Arguments?>? {
+        return Stream.of(
+            Arguments.of(-PI/2-1.0, 2.42551),
+            Arguments.of(-PI/2+1.0, 2.42551),
+            Arguments.of(-3*PI/2-1.0, 2.42551),
+            Arguments.of(-3*PI/2+1.0, 2.42551)
+        )
+    }
+
+    @ParameterizedTest(name="system next to x = 0 left")
+    @MethodSource("argsForPointsNextToX0")
+    fun `left test points next to x=0 points`(x: Double, result: Double){
+        every { cot(x, any()) } returns kotlinCot(x)
+        every { tan(x, any()) } returns kotlinTan(x)
+        assertEquals(result, theSystem(x, precision), precision)
+    }
+
+
+
     @ParameterizedTest(name = "the system x>=0")
     @CsvSource("""
-        1.0, 0.0, 0.0
-        1.0, 0.0
+        1.0, 0.0, 0.0, 0.0, 0.0, 0.0
     """)
-    fun `when x is greater than 0 sut uses (log10 mul ln(x))^2`(x: Double,
-                                                                log10val: Double,
-                                                                result: Double) {
-        // (((((log10(x, precision) * ln(x, precision)).pow(2)) * log5(x, precision)) - log5(x, precision)) - (log3(x, precision).pow(3)))
-        // log10 вернет 0 и ( log10(x)*ln(x) )^2 = 0, => -log5(x) - log3(x)^3
-        every { log10(x, any()) } returns log10val
+    fun `when x=1`(x: Double, lnVal:Double, log3Val:Double, log5Val: Double, log10Val: Double, result: Double) {
+        every { log10(x, any()) } returns log10Val
+        every { log5(x, any()) } returns log5Val
+        every { log3(x, any()) } returns log3Val
+        every { ln(x, any()) } returns lnVal
 
-        assertEquals(-log5(x, precision) - log3(x, precision).pow(3), theSystem(x, precision), precision)
+        assertEquals(result, theSystem(x, precision), precision)
     }
+
+
+    @ParameterizedTest(name = "the system x>=0")
+    @CsvSource("""
+        14.563, 0
+        7.61, -3.53
+        0.131, 3.53
+        20.0, 6.138
+    """)
+    fun `test other check points`(x: Double, result: Double) {
+        every { log10(x, any()) } returns kotlin.math.log10(x)
+        every { log5(x, any()) } returns kotlin.math.log(x, 5.0)
+        every { log3(x, any()) } returns kotlin.math.log(x, 3.0)
+        every { ln(x, any()) } returns kotlin.math.ln(x)
+
+        assertEquals(result, theSystem(x, precision), 0.001)
+    }
+
 
     companion object {
         @JvmStatic

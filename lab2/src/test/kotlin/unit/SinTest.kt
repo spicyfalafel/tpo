@@ -4,7 +4,6 @@ import mymath.sin
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import kotlin.math.PI
-import kotlin.math.sin
 import kotlin.test.assertEquals
 
 class SinTest {
