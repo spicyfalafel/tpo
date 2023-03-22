@@ -28,7 +28,7 @@ fun writeFuncSeries(filename: String,
 
     val xAndYStrings = generateSequence(from) { it + precision }
         .takeWhile { it <= until }
-        .map { "${it.replacedWithDot}; ${func(it, precision).replacedWithDot}" }
+        .map { "\"${it.replacedWithDot}\", \"${func(it, precision).replacedWithDot}\"" }
         .toList()
     write(filename, xAndYStrings)
 }
