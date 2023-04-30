@@ -19,12 +19,14 @@ public class SeleniumTest {
     @Test
     void testDriver() {
         Utils.getDrivers().forEach(driver ->
-                {
-                    mainPage = new MainPage(driver);
-                    mainPage.goToMainPage();
-                    assertEquals("Траст сайта (Сервис) - Seo анализ сайта и проверка качества ссылок онлайн", mainPage.getTitle());
-                }
-        );
+        {
+            new Thread(() -> {
+                mainPage = new MainPage(driver);
+                mainPage.goToMainPage();
+                assertEquals("Траст сайта (Сервис) - Seo анализ сайта и проверка качества ссылок онлайн", mainPage.getTitle());
+            }
+            ).start();
+        });
     }
 
     @AfterAll

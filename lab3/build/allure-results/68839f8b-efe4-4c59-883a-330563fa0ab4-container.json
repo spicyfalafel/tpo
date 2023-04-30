@@ -1,1 +1,0 @@
-{"uuid":"68839f8b-efe4-4c59-883a-330563fa0ab4","name":"SeleniumTest","children":["b566375d-c11d-4502-8a06-6950c8059018"],"befores":[{"name":"prepareDrivers","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1682783942657,"stop":1682783942659}],"afters":[],"start":1682783942633,"stop":1682783958175}

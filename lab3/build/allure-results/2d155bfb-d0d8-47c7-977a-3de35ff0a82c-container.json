@@ -1,1 +1,0 @@
-{"uuid":"2d155bfb-d0d8-47c7-977a-3de35ff0a82c","name":"AuthorizationTest","children":["3b93f961-9106-4ce7-b412-fe4e464e9cfb"],"befores":[{"name":"prepareDrivers","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1682790185277,"stop":1682790185281}],"afters":[],"start":1682790185245,"stop":1682790199593}

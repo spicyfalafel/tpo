@@ -27,6 +27,10 @@ public class AuthorizationTest {
                     mainPage.exit();
                     assertEquals("https://xtool.ru/", driver.getCurrentUrl());
                     assertTrue(mainPage.loginButton.isDisplayed());
+
+                    mainPage.login("notemail", "badpas");
+                    var badLogin = mainPage.getBadLoginText();
+                    assertEquals("Не верный формат e-mail адреса", badLogin);
                 });
     }
 
